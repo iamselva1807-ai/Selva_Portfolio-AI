@@ -8,7 +8,7 @@ type Props = {
   children: ReactNode;
   className?: string;
   delay?: number;
-  as?: "div" | "section" | "li" | "article" | "header";
+  as?: "div" | "section" | "li" | "ul" | "ol" | "article" | "header";
   variant?: "rise" | "fade";
 };
 

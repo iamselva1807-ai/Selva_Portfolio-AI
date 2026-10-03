@@ -3,15 +3,10 @@ import PageHeader from "@/components/shell/PageHeader";
 import { CTA, ArrowGlyph } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/content/site";
-import { pageMeta } from "@/content/seo";
+import { buildPageMetadata } from "@/content/metadata";
 
-const meta = pageMeta("/resume");
 
-export const metadata: Metadata = {
-  title: meta?.title ?? "Resume",
-  description: meta?.description,
-  alternates: { canonical: "/resume" },
-};
+export const metadata: Metadata = buildPageMetadata({ route: "/resume" });
 
 export default function ResumePage() {
   return (

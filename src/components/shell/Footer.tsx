@@ -2,7 +2,7 @@ import Link from "next/link";
 import { navItems, site } from "@/content/site";
 
 export default function Footer() {
-  const year = 2026;
+  const year = new Date().getFullYear();
   return (
     <footer className="relative mt-32 border-t border-line/70">
       <div className="shell grid gap-10 py-14 md:grid-cols-[1.2fr_1fr_1fr]">

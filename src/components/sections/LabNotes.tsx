@@ -83,7 +83,7 @@ export default function LabNotes({
                   )}
                 />
                 {category}
-                <span className="tabular-nums opacity-55">{count}</span>
+                <span className="tabular-nums text-ink-3">{count}</span>
               </button>
             );
           })}

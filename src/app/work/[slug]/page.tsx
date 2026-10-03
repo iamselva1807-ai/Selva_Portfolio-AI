@@ -7,7 +7,10 @@ import { SectionLabel, OwnershipBadge, Tag } from "@/components/ui/Label";
 import { ArrowGlyph, CTA } from "@/components/ui/Button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { projects, getProject, adjacentProjects } from "@/content/projects";
-import { site } from "@/content/site";
+import { buildPageMetadata } from "@/content/metadata";
+
+/** Every case study is known at build time; anything else is a real 404. */
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -19,16 +22,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return { title: "Case study not found" };
-  return {
+  return buildPageMetadata({
+    route: `/work/${project.slug}`,
     title: project.title,
     description: project.tagline,
-    alternates: { canonical: `/work/${project.slug}` },
-    openGraph: {
-      title: `${project.title} — ${site.name}`,
-      description: project.tagline,
-      type: "article",
-    },
-  };
+    type: "article",
+  });
 }
 
 /** Section wrapper so every case study has identical rhythm. */

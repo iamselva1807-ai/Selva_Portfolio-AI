@@ -6,15 +6,10 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { identity } from "@/content/identity";
 import { roles, education, certifications } from "@/content/experience";
 import { site } from "@/content/site";
-import { pageMeta } from "@/content/seo";
+import { buildPageMetadata } from "@/content/metadata";
 
-const meta = pageMeta("/about");
 
-export const metadata: Metadata = {
-  title: meta?.title ?? "About",
-  description: meta?.description,
-  alternates: { canonical: "/about" },
-};
+export const metadata: Metadata = buildPageMetadata({ route: "/about" });
 
 const current = roles[0];
 const focusPanel = identity.missionControl.find((p) => p.label === "FOCUS");

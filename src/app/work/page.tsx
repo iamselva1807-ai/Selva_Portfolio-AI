@@ -4,15 +4,10 @@ import ProjectRow from "@/components/sections/ProjectRow";
 import ClosingCTA from "@/components/sections/ClosingCTA";
 import { Reveal } from "@/components/ui/Reveal";
 import { projects } from "@/content/projects";
-import { pageMeta } from "@/content/seo";
+import { buildPageMetadata } from "@/content/metadata";
 
-const meta = pageMeta("/work");
 
-export const metadata: Metadata = {
-  title: meta?.title ?? "Work",
-  description: meta?.description,
-  alternates: { canonical: "/work" },
-};
+export const metadata: Metadata = buildPageMetadata({ route: "/work" });
 
 export default function WorkPage() {
   return (

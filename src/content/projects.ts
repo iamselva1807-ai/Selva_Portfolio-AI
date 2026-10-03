@@ -177,7 +177,7 @@ export const projects: Project[] = [
     "period": "Jul 2025 — Present",
     "role": "Data Analyst / Data Scientist — Xylium Global Services",
     "tagline": "Turns scanned government land records into verified, queryable data a bank can lend against.",
-    "cardSummary": "A bank must prove land ownership before a property loan. This API extracts Tamil government records into structured fields, cross-checks them against source APIs, and cuts review ~40%.",
+    "cardSummary": "A bank must prove land ownership before a property loan. This API extracts Tamil Nadu government records into structured fields, cross-checks them against source APIs, and cuts review ~40%.",
     "focus": [
       "Document intelligence",
       "Tamil-script OCR",

@@ -4,15 +4,10 @@ import LabNotes from "@/components/sections/LabNotes";
 import { SectionLabel } from "@/components/ui/Label";
 import { Reveal } from "@/components/ui/Reveal";
 import { researchIntro, labNotes, labCategories } from "@/content/research";
-import { pageMeta } from "@/content/seo";
+import { buildPageMetadata } from "@/content/metadata";
 
-const meta = pageMeta("/research");
 
-export const metadata: Metadata = {
-  title: meta?.title ?? "Research Lab",
-  description: meta?.description,
-  alternates: { canonical: "/research" },
-};
+export const metadata: Metadata = buildPageMetadata({ route: "/research" });
 
 /** How every note on this page is written — stated once, up front. */
 const format = [

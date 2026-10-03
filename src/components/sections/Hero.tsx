@@ -51,6 +51,7 @@ export default function Hero() {
         {/* ---------- Copy ---------- */}
         <div className="relative z-10 max-w-2xl">
           <motion.p
+            data-reveal=""
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE }}
@@ -66,6 +67,7 @@ export default function Hero() {
           {/* The name is the h1: a recruiter should never have to hunt for
               whose portfolio this is. The positioning line sits under it. */}
           <motion.h1
+            data-reveal=""
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: EASE, delay: 0.06 }}
@@ -76,6 +78,7 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p
+            data-reveal=""
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.12 }}
@@ -85,6 +88,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.p
+            data-reveal=""
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.18 }}
@@ -94,6 +98,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.p
+            data-reveal=""
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.2 }}
@@ -103,6 +108,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.div
+            data-reveal=""
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.28 }}
@@ -118,6 +124,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.div
+            data-reveal=""
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.38 }}
@@ -142,6 +149,7 @@ export default function Hero() {
 
         {/* ---------- Constellation + portrait ---------- */}
         <motion.div
+          data-reveal=""
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: EASE, delay: 0.2 }}
@@ -166,6 +174,7 @@ export default function Hero() {
 
       {/* Scroll affordance */}
       <motion.div
+        data-reveal=""
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1, duration: 0.8 }}

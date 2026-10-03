@@ -5,16 +5,11 @@ import { SectionLabel } from "@/components/ui/Label";
 import { ArrowGlyph } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { identity } from "@/content/identity";
-import { pageMeta } from "@/content/seo";
+import { buildPageMetadata } from "@/content/metadata";
 import { site, socialLinks } from "@/content/site";
 
-const meta = pageMeta("/contact");
 
-export const metadata: Metadata = {
-  title: meta?.title,
-  description: meta?.description,
-  alternates: { canonical: "/contact" },
-};
+export const metadata: Metadata = buildPageMetadata({ route: "/contact" });
 
 const row =
   "group flex items-center justify-between gap-6 bg-surface/90 px-6 py-8 transition-colors duration-500 hover:bg-surface-2/90 focus-visible:-outline-offset-4 sm:px-8 sm:py-10";

@@ -9,8 +9,7 @@ import { projects } from "@/content/projects";
  */
 export default function WorkTeasers() {
   return (
-    <ul className="mt-10 divide-y divide-line border-y border-line">
-      <RevealGroup as="div" className="contents">
+    <RevealGroup as="ul" className="mt-10 divide-y divide-line border-y border-line">
         {projects.map((p, i) => (
           <RevealItem as="li" key={p.slug}>
             <Link
@@ -32,7 +31,6 @@ export default function WorkTeasers() {
             </Link>
           </RevealItem>
         ))}
-      </RevealGroup>
-    </ul>
+    </RevealGroup>
   );
 }

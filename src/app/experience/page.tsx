@@ -4,15 +4,10 @@ import { SectionLabel, Tag } from "@/components/ui/Label";
 import { Reveal } from "@/components/ui/Reveal";
 import { roles } from "@/content/experience";
 import { skillGroups } from "@/content/skills";
-import { pageMeta } from "@/content/seo";
+import { buildPageMetadata } from "@/content/metadata";
 
-const meta = pageMeta("/experience");
 
-export const metadata: Metadata = {
-  title: meta?.title ?? "Experience",
-  description: meta?.description,
-  alternates: { canonical: "/experience" },
-};
+export const metadata: Metadata = buildPageMetadata({ route: "/experience" });
 
 /** Shared section rhythm — identical to the case-study pages. */
 function Section({
@@ -288,7 +283,7 @@ export default function ExperiencePage() {
 
         {/* ---------------- Capabilities ---------------- */}
         <Section
-          index="03"
+          index="02"
           label="Capabilities"
           title="Grouped by what they are for, not scored out of ten."
           id="capabilities"

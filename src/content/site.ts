@@ -44,7 +44,9 @@ export const site = {
   role: "AI/ML Engineer · Data Scientist",
   location: "Chennai, India",
   email: "iam.selva1807@gmail.com",
-  phone: "+91 9159652515",
+  // NOTE: deliberately no phone number here. This module is imported by client
+  // components, so every field ends up in the public JS bundle whether or not it
+  // is rendered. The number stays in the resume PDF, which people choose to open.
   linkedin: "https://www.linkedin.com/in/selvakumar-manoharan-4ab1b8215",
   /** Resume lists no public repository profile, so none is published. */
   github: null as string | null,
@@ -75,6 +77,6 @@ export const navItems: NavItem[] = [
 /** Links rendered in the hero and contact page. Nulls are filtered out. */
 export const socialLinks = [
   { label: "Email", href: `mailto:${site.email}`, value: site.email },
-  { label: "LinkedIn", href: site.linkedin, value: "in/selvakumar-manoharan" },
+  { label: "LinkedIn", href: site.linkedin, value: "selvakumar-manoharan-4ab1b8215" },
   { label: "Resume", href: "/resume", value: "PDF · View & download" },
 ] as const;

@@ -16,7 +16,6 @@ const routeWeight: Record<
   "/resume": { priority: 0.8, changeFrequency: "yearly" },
   "/research": { priority: 0.7, changeFrequency: "monthly" },
   "/experience": { priority: 0.7, changeFrequency: "yearly" },
-  "/skills": { priority: 0.7, changeFrequency: "yearly" },
   "/contact": { priority: 0.6, changeFrequency: "yearly" },
 };
 

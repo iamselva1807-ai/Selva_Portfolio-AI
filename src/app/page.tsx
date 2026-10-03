@@ -7,14 +7,9 @@ import { ArrowGlyph, CTA } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { identity } from "@/content/identity";
 import { site } from "@/content/site";
-import { pageMeta } from "@/content/seo";
+import { buildPageMetadata } from "@/content/metadata";
 
-const meta = pageMeta("/");
-
-export const metadata = {
-  description: meta?.description,
-  alternates: { canonical: "/" },
-};
+export const metadata = buildPageMetadata({ route: "/" });
 
 export default function Home() {
   return (
