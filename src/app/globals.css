@@ -1,26 +1,330 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   DESIGN SYSTEM — "Digital Observatory"
+   Deep space black · luminous particles · cyan signal · subtle violet
+   Dark-only by design. Every token lives here.
+   ============================================================ */
+
+@theme {
+  /* ---- Surfaces: layered void, never flat black ---- */
+  --color-void: #050507;
+  --color-void-2: #08090e;
+  --color-surface: #0a0b10;
+  --color-surface-2: #0e1017;
+  --color-surface-3: #14171f;
+
+  /* ---- Hairlines ---- */
+  --color-line: #1c1f28;
+  --color-line-2: #272b36;
+  --color-line-bright: #353a48;
+
+  /* ---- Text ---- */
+  --color-ink: #f5f7fa;
+  --color-ink-2: #a7adb8;
+  --color-ink-3: #868d9a;
+  /* Decorative only — too low-contrast for text. Use ink-3 for muted copy. */
+  --color-ink-4: #4e5562;
+
+  /* ---- Signal: electric cyan ---- */
+  --color-signal: #35c8e8;
+  --color-signal-bright: #7ddcf0;
+  --color-signal-pale: #cbf2fa;
+  --color-signal-deep: #14758c;
+  --color-signal-abyss: #0a2a33;
+
+  /* ---- Secondary: restrained violet ---- */
+  --color-violet: #8b82f0;
+  --color-violet-deep: #4a43a0;
+  --color-violet-abyss: #1a1734;
+
+  /* ---- Fonts ---- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-jb), ui-monospace, SFMono-Regular, monospace;
+
+  /* ---- Fluid editorial type scale ---- */
+  --text-micro: 0.6875rem;
+  --text-mono-xs: 0.6875rem;
+  --text-mono-sm: 0.75rem;
+  --text-fluid-sm: clamp(0.875rem, 0.84rem + 0.17vw, 0.9375rem);
+  --text-fluid-base: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+  --text-fluid-lg: clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem);
+  --text-fluid-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.625rem);
+  --text-display-sm: clamp(1.75rem, 1.4rem + 1.7vw, 2.75rem);
+  --text-display: clamp(2.25rem, 1.5rem + 3.6vw, 4.5rem);
+  --text-display-lg: clamp(2.75rem, 1.5rem + 5.6vw, 6.5rem);
+
+  /* ---- Motion ---- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ---- Layout rhythm ---- */
+  --shell-max: 76rem;
+  --shell-pad: clamp(1.25rem, 5vw, 4rem);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ============================================================
+   BASE
+   ============================================================ */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* Clip at the root: overflow here propagates to the viewport, so the
+       window stays the scroll container. Setting this on <body> instead
+       silently turns the body into its own scroller and breaks window.scrollY. */
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-fluid-base);
+    line-height: 1.65;
+    letter-spacing: -0.005em;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Editorial headings: tight tracking, no synthetic weight */
+  h1, h2, h3, h4 {
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-signal) 28%, transparent);
+    color: var(--color-signal-pale);
+  }
+
+  /* Focus: always visible, never clipped */
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Scrollbar — thin, in-palette */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-void);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line-2);
+    border: 3px solid var(--color-void);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-line-bright);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================
+   COMPONENTS — emitted before utilities, so a `text-*` utility
+   composed alongside these classes still wins the cascade.
+   (Declaring them in @layer utilities made `.mono-label` override
+   every colour utility placed next to it.)
+   ============================================================ */
+
+@layer components {
+  /* Monospace metadata label — the recurring "instrument readout" voice */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-xs);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    font-weight: 500;
+  }
+  .mono-meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-sm);
+    letter-spacing: 0.04em;
+    color: var(--color-ink-3);
+  }
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+
+@layer utilities {
+  /* Shell: the single horizontal rhythm used site-wide */
+  .shell {
+    width: 100%;
+    max-width: var(--shell-max);
+    margin-inline: auto;
+    padding-inline: var(--shell-pad);
+  }
+  .shell-wide {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: var(--shell-pad);
+  }
+
+  /* Glass surface — depth without blur abuse */
+  .glass {
+    background: color-mix(in oklab, var(--color-surface) 72%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid var(--color-line);
+  }
+
+  /* Panel: the workhorse card surface */
+  .panel {
+    position: relative;
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in oklab, var(--color-surface-2) 90%, transparent) 0%,
+        color-mix(in oklab, var(--color-surface) 70%, transparent) 100%
+      );
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+  }
+
+  /* Hairline that fades at both ends — used instead of hard rules */
+  .rule-fade {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-line-2) 15%,
+      var(--color-line-2) 85%,
+      transparent
+    );
+  }
+
+  /* Text gradient for display headings */
+  .ink-gradient {
+    background: linear-gradient(
+      172deg,
+      var(--color-ink) 0%,
+      var(--color-ink) 55%,
+      color-mix(in oklab, var(--color-ink) 80%, var(--color-void)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .signal-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--color-signal-pale) 0%,
+      var(--color-signal) 45%,
+      var(--color-violet) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Atmospheric radial glow, placed behind content */
+  .aura {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+  }
+
+  /* Hide visually, keep for screen readers */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ============================================================
+   KEYFRAMES — all gated behind prefers-reduced-motion below
+   ============================================================ */
+
+@keyframes aura-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.45; }
+  50% { transform: translate3d(2%, -3%, 0) scale(1.07); opacity: 0.62; }
+}
+
+@keyframes pulse-node {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+
+@keyframes trace-line {
+  from { stroke-dashoffset: var(--dash, 200); }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes sheen {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(220%); }
+}
+
+@keyframes caret-blink {
+  0%, 45% { opacity: 1; }
+  55%, 100% { opacity: 0.15; }
+}
+
+.animate-aura { animation: aura-drift 18s var(--ease-in-out-soft) infinite; }
+.animate-node { animation: pulse-node 3.2s var(--ease-in-out-soft) infinite; }
+.animate-caret { animation: caret-blink 1.4s steps(1) infinite; }
+
+/* ============================================================
+   REDUCED MOTION — the site must be fully usable and still
+   beautiful with every animation switched off.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-aura,
+  .animate-node,
+  .animate-caret {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Print: resume-friendly, no dark ink dump */
+@media print {
+  body { background: #fff; color: #000; }
+  .no-print { display: none !important; }
 }
