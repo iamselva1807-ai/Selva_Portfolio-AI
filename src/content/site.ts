@@ -50,7 +50,7 @@ export const site = {
   linkedin: "https://www.linkedin.com/in/selvakumar-manoharan-4ab1b8215",
   /** Resume lists no public repository profile, so none is published. */
   github: null as string | null,
-  resumeFile: "/Selvakumar_Manoharan_Resume.pdf",
+  resumeFile: "/Selvakumar_Manoharan_resume.pdf",
   resumeUpdated: "October 2026",
   url: resolveSiteUrl(),
   portraitAlt:
