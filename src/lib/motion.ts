@@ -52,5 +52,8 @@ export function stagger(delayChildren = 0, staggerChildren = 0.07): Variants {
   };
 }
 
-/** Shared viewport config: animate once, trigger early so nothing pops in late. */
-export const inView = { once: true, margin: "-12% 0px -12% 0px" } as const;
+/**
+ * Shared viewport config: animate once. Only the bottom edge is inset — insetting
+ * the top too left content near the top of the viewport unrevealed after a jump.
+ */
+export const inView = { once: true, margin: "0px 0px -8% 0px" } as const;

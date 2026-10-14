@@ -37,7 +37,7 @@ export const identity: Identity = {
     {
       "heading": "What I build",
       "body": [
-        "Most of my production work is digital identity verification — turning a face captured on a phone into a decision a bank can act on, and knowing whether there was a real person in front of the camera at all. Alongside it sits the document side: OCR and language-model extraction that pull structured fields out of government paperwork and check them against the source. Both come down to the same question — where does the operating point belong when being wrong is expensive? The case studies go into how."
+        "Most of my production work is digital identity verification — turning a face captured on a phone into a decision a bank can act on, and knowing whether there was a real person in front of the camera at all. Alongside it sits the document side: OCR extraction that pulls structured Tamil fields out of government land records and checks them against the source. Both come down to the same question — where does the operating point belong when being wrong is expensive? The case studies go into how."
       ]
     },
     {

@@ -5,6 +5,7 @@ import Nav from "@/components/shell/Nav";
 import Footer from "@/components/shell/Footer";
 import Backdrop from "@/components/visual/Backdrop";
 import MotionProvider from "@/components/shell/MotionProvider";
+import RouteScrollReset from "@/components/shell/RouteScrollReset";
 import { seo } from "@/content/seo";
 import { site } from "@/content/site";
 
@@ -106,6 +107,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <noscript>
           <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
+        <RouteScrollReset />
         <MotionProvider>
           <Backdrop />
           <Nav />

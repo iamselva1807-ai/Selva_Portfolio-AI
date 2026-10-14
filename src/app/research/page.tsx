@@ -29,7 +29,7 @@ export default function ResearchPage() {
     <>
       <PageHeader
         index="05"
-        label="Lab Notes"
+        label="Research & Engineering"
         title="What I asked, what I tried, what held up."
         lede={researchIntro}
       >

@@ -25,7 +25,7 @@ export const labNotes: LabNote[] = [
     "title": "One Inference Path",
     "question": "What changes when a model goes from a script that works to a service answering every request identically?",
     "approach": "Converted models to ONNX and collapsed scattered inference code into one predictable sequence behind a single REST interface, packaged for deployment.",
-    "learning": "Most of the speed came from removing duplicated work, not a cleverer model. The quieter win was reproducibility — one inference path, one place where behavior can drift.",
+    "learning": "Consolidating the inference code mattered as much as the model choice. The quieter win was reproducibility — one inference path, one place where behavior can drift.",
     "status": "Applied in production",
     "companyWork": true,
     "tags": [
@@ -41,7 +41,7 @@ export const labNotes: LabNote[] = [
     "title": "The Schema Is the Contract",
     "question": "Can a model reading a page against a fixed schema survive layout changes better than hand-written selectors?",
     "approach": "Replaced position-dependent extraction rules with prompt-driven parsing against an explicit output schema, so extraction asked for meaning rather than a path through markup.",
-    "learning": "The schema is what makes it trustworthy — the model is dependable only because the shape of its answer is fixed and checkable. Layout drift became a non-event.",
+    "learning": "The schema is what makes it trustworthy — the model is dependable only because the shape of its answer is fixed and checkable. Layout drift stopped meaning a rewrite.",
     "status": "Applied in production",
     "companyWork": true,
     "tags": [

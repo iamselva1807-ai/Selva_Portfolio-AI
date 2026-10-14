@@ -350,7 +350,7 @@ export const projects: Project[] = [
     "challenge": {
       "heading": "Identity proves who. Behavior suggests whether to trust.",
       "body": [
-        "An identity check answers a narrow question: is this the right person, with the right document, present right now. It says nothing about how the session actually unfolded — two sessions can clear the same checks and look nothing alike. The harder half of the problem was organisational, not statistical: several services needed the same behavioral view, and without one shared definition each would describe behavior slightly differently, letting risk decisions across the platform quietly drift apart."
+        "An identity check answers a narrow question: is this the right person, with the right document, present right now. It says nothing about how the session actually unfolded — two sessions can clear the same checks and look nothing alike. The harder half of the problem was organizational, not statistical: several services needed the same behavioral view, and without one shared definition each would describe behavior slightly differently, letting risk decisions across the platform quietly drift apart."
       ]
     },
     "approach": {
@@ -478,7 +478,7 @@ export const projects: Project[] = [
     "category": "Generative AI / Data Engineering",
     "period": "Nov 2023 — Jun 2025",
     "role": "Software Engineer Trainee → Software Engineer / Data Analyst, CloudHalo Technology Services",
-    "tagline": "Turning constantly-changing web pages into schema-consistent structured data that survives the next site redesign.",
+    "tagline": "Turning constantly-changing web pages into schema-consistent structured data, with far less upkeep when a site's layout changes.",
     "cardSummary": "Scrapers break on every redesign. Moving the parsing layer to an LLM working against a fixed schema kept collection running — and cut refresh time roughly 30%.",
     "focus": [
       "Applied Generative AI",

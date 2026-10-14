@@ -48,8 +48,16 @@ export const site = {
   // components, so every field ends up in the public JS bundle whether or not it
   // is rendered. The number stays in the resume PDF, which people choose to open.
   linkedin: "https://www.linkedin.com/in/selvakumar-manoharan-4ab1b8215",
-  /** Resume lists no public repository profile, so none is published. */
+  /** Deliberately omitted from the site at the owner's request. */
   github: null as string | null,
+  /**
+   * Naukri profile. Left null on purpose: the URL supplied
+   * (naukri.com/mnjuser/profile?id=&altresid) is Naukri's signed-in
+   * "my profile" page — logged-out visitors are redirected to /nlogin/login and
+   * a signed-in recruiter sees their own profile, never this one. Put a
+   * shareable profile URL here and it appears on /contact and in the footer.
+   */
+  naukri: null as string | null,
   resumeFile: "/Selvakumar_Manoharan_resume.pdf",
   resumeUpdated: "October 2026",
   url: resolveSiteUrl(),
@@ -66,17 +74,38 @@ export type NavItem = {
 
 export const navItems: NavItem[] = [
   { href: "/", label: "Home", index: "01" },
-  { href: "/work", label: "Work", index: "02" },
-  { href: "/about", label: "About", index: "03" },
-  { href: "/experience", label: "Experience", index: "04" },
-  { href: "/research", label: "Notes", index: "05" },
-  { href: "/resume", label: "Resume", index: "06" },
-  { href: "/contact", label: "Contact", index: "07" },
+  { href: "/about", label: "About", index: "02" },
+  { href: "/experience", label: "Experience", index: "03" },
+  { href: "/work", label: "Projects", index: "04" },
+  { href: "/research", label: "Research & Engineering", index: "05" },
+  { href: "/contact", label: "Contact", index: "06" },
 ];
 
 /** Links rendered in the hero and contact page. Nulls are filtered out. */
-export const socialLinks = [
-  { label: "Email", href: `mailto:${site.email}`, value: site.email },
-  { label: "LinkedIn", href: site.linkedin, value: "selvakumar-manoharan-4ab1b8215" },
-  { label: "Resume", href: "/resume", value: "PDF · View & download" },
-] as const;
+export type ContactChannel = {
+  id: "email" | "linkedin" | "naukri";
+  label: string;
+  href: string;
+  value: string;
+  external: boolean;
+};
+
+/**
+ * Every contact channel the site renders. Channels whose URL is not configured
+ * are filtered out here, so no page can ever show a link that goes nowhere.
+ */
+export const contactChannels: ContactChannel[] = (
+  [
+    { id: "email", label: "Email", href: `mailto:${site.email}`, value: site.email, external: false },
+    {
+      id: "linkedin",
+      label: "LinkedIn",
+      href: site.linkedin,
+      value: "selvakumar-manoharan-4ab1b8215",
+      external: true,
+    },
+    site.naukri
+      ? { id: "naukri", label: "Naukri Profile", href: site.naukri, value: "View profile on Naukri", external: true }
+      : null,
+  ] as Array<ContactChannel | null>
+).filter((c): c is ContactChannel => c !== null);

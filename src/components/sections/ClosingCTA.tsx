@@ -25,8 +25,8 @@ export default function ClosingCTA() {
                 Get in touch
                 <ArrowGlyph />
               </CTA>
-              <CTA href="/resume" variant="secondary">
-                View Resume
+              <CTA href="/contact" variant="secondary">
+                Contact page
               </CTA>
             </div>
           </div>
