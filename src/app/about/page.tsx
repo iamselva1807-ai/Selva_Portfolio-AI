@@ -21,7 +21,7 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
-        index="03"
+        index="02"
         label="About"
         title="I build models somebody has to answer for."
         lede={identity.aboutIntro}

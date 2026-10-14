@@ -1,61 +1,44 @@
-import Link from "next/link";
 import Hero from "@/components/sections/Hero";
 import Snapshot from "@/components/sections/Snapshot";
-import WorkTeasers from "@/components/sections/WorkTeasers";
-import { SectionLabel } from "@/components/ui/Label";
-import { ArrowGlyph, CTA } from "@/components/ui/Button";
-import { Reveal } from "@/components/ui/Reveal";
-import { identity } from "@/content/identity";
-import { site } from "@/content/site";
+import ChapterRail, { type Chapter } from "@/components/story/ChapterRail";
+import PhilosophyChapter from "@/components/story/PhilosophyChapter";
+import CapabilitiesBand from "@/components/story/CapabilitiesBand";
+import ProjectsShowcase from "@/components/story/ProjectsShowcase";
+import PipelineChapter from "@/components/story/PipelineChapter";
+import ResearchPreview from "@/components/story/ResearchPreview";
+import ContactChapter from "@/components/story/ContactChapter";
 import { buildPageMetadata } from "@/content/metadata";
 
 export const metadata = buildPageMetadata({ route: "/" });
 
+/** Must match the `id`s on the chapter sections below, in order. */
+const CHAPTERS: Chapter[] = [
+  { id: "introduction", label: "Introduction" },
+  { id: "philosophy", label: "How I work" },
+  { id: "capabilities", label: "Capabilities" },
+  { id: "projects", label: "Projects" },
+  { id: "architecture", label: "How it's built" },
+  { id: "research", label: "Research" },
+  { id: "contact", label: "Contact" },
+];
+
+/**
+ * The home page is the story: who → how → with what → what was built → how it
+ * works → what's being explored → how to reach me. Each chapter previews and
+ * links onward; the detail lives on its own page, stated once.
+ */
 export default function Home() {
   return (
     <>
+      <ChapterRail chapters={CHAPTERS} />
       <Hero />
       <Snapshot />
-
-      <section className="shell pb-24 sm:pb-32" aria-labelledby="featured-work">
-        <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <SectionLabel index="01">Selected Work</SectionLabel>
-              <h2
-                id="featured-work"
-                className="mt-5 max-w-2xl text-[length:var(--text-display-sm)] font-semibold text-ink"
-              >
-                Systems built to make a decision, not a demo.
-              </h2>
-            </div>
-            <Link
-              href="/work"
-              className="group inline-flex items-center gap-2 text-sm font-medium text-signal transition-colors hover:text-signal-bright"
-            >
-              All work
-              <ArrowGlyph />
-            </Link>
-          </div>
-        </Reveal>
-
-        <WorkTeasers />
-
-        <Reveal delay={0.05}>
-          <p className="mt-10 max-w-xl text-[0.9375rem] leading-relaxed text-ink-2">
-            {identity.contactBody}
-          </p>
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <CTA href={`mailto:${site.email}`} variant="primary">
-              Get in touch
-              <ArrowGlyph />
-            </CTA>
-            <CTA href="/resume" variant="secondary">
-              View Resume
-            </CTA>
-          </div>
-        </Reveal>
-      </section>
+      <PhilosophyChapter />
+      <CapabilitiesBand />
+      <ProjectsShowcase />
+      <PipelineChapter />
+      <ResearchPreview />
+      <ContactChapter />
     </>
   );
 }

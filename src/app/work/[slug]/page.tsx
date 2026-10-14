@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import PipelineFlow from "@/components/visual/PipelineFlow";
+import PipelineDiagram from "@/components/visual/PipelineDiagram";
+import ProjectBanner from "@/components/visual/banners/ProjectBanner";
+import { TechLogo, hasTechLogo } from "@/components/ui/Icons";
 import ArchitectureDiagram from "@/components/visual/ArchitectureDiagram";
 import { SectionLabel, OwnershipBadge, Tag } from "@/components/ui/Label";
 import { ArrowGlyph, CTA } from "@/components/ui/Button";
@@ -136,6 +138,17 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
       </header>
 
       <div className="shell">
+        <Reveal>
+          <figure className="overflow-hidden rounded-3xl border border-line bg-[radial-gradient(120%_90%_at_50%_0%,var(--color-surface-2),var(--color-void))]">
+            <ProjectBanner slug={project.slug} className="aspect-[16/9] h-auto w-full" />
+            <figcaption className="mono-meta border-t border-line px-5 py-3 text-ink-3">
+              Original conceptual illustration — not a screenshot of the production system.
+            </figcaption>
+          </figure>
+        </Reveal>
+      </div>
+
+      <div className="shell">
         {/* ---------------- Challenge ---------------- */}
         <Block index="01" label="The Challenge" title={project.challenge.heading}>
           <Prose body={project.challenge.body} />
@@ -144,7 +157,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
         {/* ---------------- Approach ---------------- */}
         <Block index="02" label="The Approach" title={project.approach.heading}>
           <Prose body={project.approach.body} />
-          <PipelineFlow steps={project.approach.pipeline} />
+          <PipelineDiagram steps={project.approach.pipeline} />
         </Block>
 
         {/* ---------------- Contribution ---------------- */}
@@ -194,7 +207,13 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
                 <p className="mono-label">{group.group}</p>
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {group.items.map((item) => (
-                    <Tag key={item}>{item}</Tag>
+                    <span
+                      key={item}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-line-2 bg-surface-2/60 px-2.5 py-1 font-mono text-[11px] tracking-[0.02em] text-ink-2"
+                    >
+                      {hasTechLogo(item) && <TechLogo name={item} className="size-3.5 text-ink-3" />}
+                      {item}
+                    </span>
                   ))}
                 </div>
               </RevealItem>

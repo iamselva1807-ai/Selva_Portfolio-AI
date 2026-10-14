@@ -81,6 +81,8 @@
        window stays the scroll container. Setting this on <body> instead
        silently turns the body into its own scroller and breaks window.scrollY. */
     overflow-x: clip;
+    /* In-page chapter links (/#projects) land below the floating header. */
+    scroll-padding-top: 5.5rem;
   }
 
   body {
@@ -289,14 +291,35 @@
   to { transform: translateX(220%); }
 }
 
+@keyframes scroll-cue {
+  0% { transform: translateY(-100%); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(320%); opacity: 0; }
+}
+
+@keyframes packet {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(calc(100vw)); }
+}
+
 @keyframes caret-blink {
   0%, 45% { opacity: 1; }
   55%, 100% { opacity: 0.15; }
 }
 
 .animate-aura { animation: aura-drift 18s var(--ease-in-out-soft) infinite; }
-.animate-node { animation: pulse-node 3.2s var(--ease-in-out-soft) infinite; }
+.animate-node {
+  animation: pulse-node 3.2s var(--ease-in-out-soft) infinite;
+  /* The pulse scales. SVG elements otherwise transform about the SVG origin
+     (0,0), so an animated node drifted up to 25% down-and-right of where it
+     was drawn. fill-box + center scales each element about its own middle;
+     HTML elements fall back to their border box, which is already the case. */
+  transform-box: fill-box;
+  transform-origin: center;
+}
 .animate-caret { animation: caret-blink 1.4s steps(1) infinite; }
+.animate-scroll-cue { animation: scroll-cue 2.2s var(--ease-in-out-soft) infinite; }
+.animate-packet { animation: packet 3.6s var(--ease-in-out-soft) infinite; }
 
 /* ============================================================
    REDUCED MOTION — the site must be fully usable and still
@@ -317,7 +340,9 @@
   }
   .animate-aura,
   .animate-node,
-  .animate-caret {
+  .animate-caret,
+  .animate-scroll-cue,
+  .animate-packet {
     animation: none !important;
     opacity: 1 !important;
   }

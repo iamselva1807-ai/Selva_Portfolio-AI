@@ -32,23 +32,18 @@ export const seo: Seo = {
     },
     {
       "route": "/work",
-      "title": "Work",
+      "title": "Projects",
       "description": "Selected work: face recognition and liveness detection, Tamil land-record document verification, and behavioral fingerprinting for fraud and trust risk."
     },
     {
       "route": "/research",
-      "title": "Lab Notes",
+      "title": "Research & Engineering",
       "description": "Lab notes on face embeddings, threshold calibration, anti-spoofing datasets, ONNX deployment, LLM-driven extraction and retrieval — questions, not claims."
     },
     {
       "route": "/experience",
       "title": "Experience",
       "description": "Experience at Xylium Global Services and CloudHalo Technology Services across computer vision, LLM-assisted data pipelines, analytics and dashboards."
-    },
-    {
-      "route": "/resume",
-      "title": "Resume",
-      "description": "Resume of Selvakumar Manoharan — AI/ML Engineer and Data Scientist, Postgraduate Diploma in Data Science and Analytics, University of Hertfordshire."
     },
     {
       "route": "/contact",

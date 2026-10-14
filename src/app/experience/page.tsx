@@ -4,6 +4,7 @@ import { SectionLabel, Tag } from "@/components/ui/Label";
 import { Reveal } from "@/components/ui/Reveal";
 import { roles } from "@/content/experience";
 import { skillGroups } from "@/content/skills";
+import { TechLogo, hasTechLogo } from "@/components/ui/Icons";
 import { buildPageMetadata } from "@/content/metadata";
 
 
@@ -68,7 +69,7 @@ export default function ExperiencePage() {
   return (
     <>
       <PageHeader
-        index="04"
+        index="03"
         label="Experience"
         title="From collecting the data to deciding with it."
         lede="Three roles in Chennai since late 2023 — web crawling, pipelines and dashboards first, then production computer vision for identity, fraud and document risk. Most recent first."
@@ -298,8 +299,12 @@ export default function ExperiencePage() {
                   </p>
                   <ul className="mt-4 flex flex-wrap gap-1.5">
                     {group.skills.map((skill) => (
-                      <li key={skill}>
-                        <Tag>{skill}</Tag>
+                      <li
+                        key={skill}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-line-2 bg-surface-2/60 px-2.5 py-1 font-mono text-[11px] tracking-[0.02em] text-ink-2"
+                      >
+                        {hasTechLogo(skill) && <TechLogo name={skill} className="size-3.5 text-ink-3" />}
+                        {skill}
                       </li>
                     ))}
                   </ul>
