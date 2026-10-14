@@ -47,26 +47,34 @@ export default function ChapterRail({ chapters }: { chapters: Chapter[] }) {
   }, [chapters]);
 
   return (
-    <nav aria-label="Chapters on this page" className="fixed top-1/2 right-4 z-30 hidden -translate-y-1/2 xl:block 2xl:right-8">
+    <nav aria-label="Chapters on this page" className="pointer-events-none fixed top-1/2 right-4 z-30 hidden -translate-y-1/2 xl:block 2xl:right-8">
       <ol className="flex flex-col items-end gap-1">
         {chapters.map((c, i) => {
           const on = c.id === active;
           return (
             <li key={c.id}>
-              <a href={`/#${c.id}`} aria-current={on ? "true" : undefined} className="group flex min-h-8 items-center gap-3 rounded-full py-1 pr-1 pl-3">
+              <a
+                href={`/#${c.id}`}
+                aria-current={on ? "true" : undefined}
+                aria-label={c.label}
+                className="group pointer-events-auto relative flex min-h-8 items-center rounded-full py-1 pr-1 pl-3"
+              >
                 <span
+                  aria-hidden="true"
                   className={cn(
-                    "mono-label whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100",
+                    // Out of flow and click-through: only the dash is a target.
+                    "mono-label pointer-events-none absolute top-1/2 right-full mr-1 -translate-y-1/2 whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100",
                     on && "text-signal/90",
                   )}
                 >
-                  {String(i + 1).padStart(2, "0")} · {c.label}
+                  {/* Numbered to match the chapter labels: the introduction has none. */}
+                  {i === 0 ? c.label : `${String(i).padStart(2, "0")} · ${c.label}`}
                 </span>
                 <span
                   aria-hidden="true"
                   className={cn(
                     "block h-px rounded-full transition-[width,background-color] duration-500",
-                    on ? "w-7 bg-signal" : "w-3.5 bg-line-bright group-hover:w-5 group-hover:bg-ink-3",
+                    on ? "w-7 bg-signal" : "w-3.5 bg-ink-3 group-hover:w-5 group-hover:bg-ink-2",
                   )}
                 />
               </a>

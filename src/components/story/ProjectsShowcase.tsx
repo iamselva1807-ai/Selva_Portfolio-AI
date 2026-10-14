@@ -20,46 +20,78 @@ import ChapterHeading from "./ChapterHeading";
 export default function ProjectsShowcase() {
   const track = useRef<HTMLUListElement>(null);
   const [index, setIndex] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
-  const syncIndex = useCallback(() => {
+  /** Scroll offset of each card, clamped to what the track can actually reach. */
+  const stops = useCallback(() => {
+    const el = track.current;
+    if (!el) return [];
+    const max = el.scrollWidth - el.clientWidth;
+    return Array.from(el.children, (c) => Math.min((c as HTMLElement).offsetLeft - el.offsetLeft, max));
+  }, []);
+
+  const sync = useCallback(() => {
     const el = track.current;
     if (!el) return;
-    const cards = Array.from(el.children) as HTMLElement[];
+    const max = el.scrollWidth - el.clientWidth;
     const left = el.scrollLeft;
+    setAtStart(left <= 2);
+    setAtEnd(left >= max - 2);
+    // At the end of the track the last card is the current one, even when
+    // several cards are visible at once.
+    if (left >= max - 2) {
+      setIndex(projects.length - 1);
+      return;
+    }
+    const s = stops();
     let best = 0;
-    let bestDist = Infinity;
-    cards.forEach((c, i) => {
-      const d = Math.abs(c.offsetLeft - el.offsetLeft - left);
-      if (d < bestDist) {
-        bestDist = d;
-        best = i;
-      }
+    s.forEach((x, i) => {
+      if (Math.abs(x - left) < Math.abs(s[best] - left)) best = i;
     });
     setIndex(best);
-  }, []);
+  }, [stops]);
 
   useEffect(() => {
     const el = track.current;
     if (!el) return;
     let raf = 0;
-    const onScroll = () => {
+    const schedule = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(syncIndex);
+      raf = requestAnimationFrame(sync);
     };
-    el.addEventListener("scroll", onScroll, { passive: true });
+    schedule();
+    el.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      el.removeEventListener("scroll", onScroll);
+      el.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
       cancelAnimationFrame(raf);
     };
-  }, [syncIndex]);
+  }, [sync]);
 
-  const goTo = (i: number) => {
+  const scrollToLeft = (left: number) => {
     const el = track.current;
     if (!el) return;
-    const card = el.children[Math.max(0, Math.min(projects.length - 1, i))] as HTMLElement | undefined;
-    if (!card) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: reduce ? "instant" : "smooth" });
+    el.scrollTo({ left, behavior: reduce ? "instant" : "smooth" });
+  };
+
+  /** Dots: go to a card (clamped to the reachable range). */
+  const goTo = (i: number) => {
+    const s = stops();
+    const target = s[Math.max(0, Math.min(s.length - 1, i))];
+    if (target !== undefined) scrollToLeft(target);
+  };
+
+  /** Previous / next step through the distinct reachable positions. */
+  const step = (dir: 1 | -1) => {
+    const el = track.current;
+    if (!el) return;
+    const left = el.scrollLeft;
+    const s = Array.from(new Set(stops()));
+    const target = dir > 0 ? s.find((x) => x > left + 2) : [...s].reverse().find((x) => x < left - 2);
+    if (target !== undefined) scrollToLeft(target);
   };
 
   return (
@@ -90,9 +122,10 @@ export default function ProjectsShowcase() {
             >
               <Link
                 href={`/work/${p.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface/70 transition-[border-color,transform,background-color] duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-line-bright hover:bg-surface-2/80 focus-visible:outline-offset-4"
+                aria-label={`${p.title} — read the case study`}
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface/70 transition-[border-color,transform,background-color] duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-line-bright hover:bg-surface-2/80 focus-visible:-outline-offset-4"
               >
-                <div className="relative border-b border-line bg-[radial-gradient(120%_90%_at_50%_0%,var(--color-surface-2),var(--color-void))]">
+                <div aria-hidden="true" className="relative border-b border-line bg-[radial-gradient(120%_90%_at_50%_0%,var(--color-surface-2),var(--color-void))]">
                   <ProjectBanner slug={p.slug} className="aspect-[16/9] h-auto w-full transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.02]" />
                 </div>
                 <div className="flex flex-1 flex-col p-6 sm:p-7">
@@ -128,7 +161,7 @@ export default function ProjectsShowcase() {
                   aria-hidden="true"
                   className={cn(
                     "block h-1.5 rounded-full transition-[width,background-color] duration-500",
-                    i === index ? "w-6 bg-signal" : "w-1.5 bg-line-bright",
+                    i === index ? "w-6 bg-signal" : "w-1.5 bg-ink-3",
                   )}
                 />
               </button>
@@ -137,8 +170,8 @@ export default function ProjectsShowcase() {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => goTo(index - 1)}
-              disabled={index === 0}
+              onClick={() => step(-1)}
+              disabled={atStart}
               aria-label="Previous project"
               className="grid size-11 place-items-center rounded-full border border-line-2 text-ink-2 transition-colors hover:border-signal/40 hover:text-signal disabled:pointer-events-none disabled:opacity-35"
             >
@@ -146,8 +179,8 @@ export default function ProjectsShowcase() {
             </button>
             <button
               type="button"
-              onClick={() => goTo(index + 1)}
-              disabled={index >= projects.length - 1}
+              onClick={() => step(1)}
+              disabled={atEnd}
               aria-label="Next project"
               className="grid size-11 place-items-center rounded-full border border-line-2 text-ink-2 transition-colors hover:border-signal/40 hover:text-signal disabled:pointer-events-none disabled:opacity-35"
             >

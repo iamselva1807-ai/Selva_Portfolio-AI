@@ -11,6 +11,15 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { projects, getProject, adjacentProjects } from "@/content/projects";
 import { buildPageMetadata } from "@/content/metadata";
 
+// The outcome grid paints its gap colour into empty cells, so the column count
+// follows the number of outcomes rather than leaving a grey hole in the last row.
+const OUTCOME_COLS: Record<number, string> = {
+  1: "",
+  2: "sm:grid-cols-2",
+  3: "md:grid-cols-3",
+  4: "sm:grid-cols-2 lg:grid-cols-4",
+};
+
 /** Every case study is known at build time; anything else is a real 404. */
 export const dynamicParams = false;
 
@@ -85,7 +94,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
         <Reveal>
           <Link
             href="/work"
-            className="group mono-meta inline-flex items-center gap-2 text-ink-3 transition-colors hover:text-signal"
+            className="group mono-meta inline-flex min-h-11 items-center gap-2 text-ink-3 transition-colors hover:text-signal"
           >
             <ArrowGlyph className="rotate-180 group-hover:-translate-x-1" />
             All work
@@ -166,7 +175,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
             {project.contribution.map((c) => (
               <RevealItem
                 key={c.title}
-                className="group bg-surface/90 p-6 transition-colors duration-500 hover:bg-surface-2/90"
+                className="group bg-surface/90 p-6 sm:last:odd:col-span-2 transition-colors duration-500 hover:bg-surface-2/90"
               >
                 <div className="flex items-start gap-3">
                   <span
@@ -223,7 +232,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
 
         {/* ---------------- Outcomes ---------------- */}
         <Block index="06" label="Outcome" title="What changed.">
-          <RevealGroup className="mt-9 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <RevealGroup className={`mt-9 grid gap-px overflow-hidden rounded-2xl border border-line bg-line ${OUTCOME_COLS[project.outcomes.length] ?? OUTCOME_COLS[4]}`}>
             {project.outcomes.map((o) => (
               <RevealItem key={o.label} className="bg-surface/90 p-6">
                 <p className="text-[length:var(--text-fluid-xl)] font-semibold tracking-[-0.03em] text-balance text-signal-pale">

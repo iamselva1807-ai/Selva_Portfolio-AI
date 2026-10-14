@@ -44,7 +44,21 @@ export default function RouteScrollReset() {
 
       const url = new URL(anchor.href, window.location.href);
       if (url.origin !== window.location.origin) return;
-      if (url.hash) return;
+
+      // A chapter link on the page you're on (/#projects from /): let it glide.
+      // Smoothing is applied for this jump only — never globally, see globals.css.
+      if (url.hash) {
+        if (url.pathname === window.location.pathname && !prefersReducedMotion()) {
+          const root = document.documentElement;
+          root.style.scrollBehavior = "smooth";
+          const clear = () => {
+            root.style.scrollBehavior = "";
+          };
+          window.addEventListener("scrollend", clear, { once: true });
+          window.setTimeout(clear, 1500); // no scroll happened, or no scrollend support
+        }
+        return;
+      }
 
       if (url.pathname === window.location.pathname) {
         window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "instant" : "smooth" });
@@ -72,7 +86,6 @@ export default function RouteScrollReset() {
   useIsoLayoutEffect(() => {
     if (!pendingReset.current) return;
     pendingReset.current = false;
-    // "instant" overrides the global `scroll-behavior: smooth`.
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname]);
 

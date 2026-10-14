@@ -35,7 +35,7 @@ export default function BehavioralBanner({ className = "" }: { className?: strin
       viewBox="0 0 800 450"
       className={className}
       role="img"
-      aria-label="Illustration: interaction events on parallel lanes are grouped into a session window, condensed into a feature vector, and resolved into one shared behavioural profile that fans out identically to three consuming services."
+      aria-label="Illustration: interaction events on parallel lanes are grouped into a session window, condensed into a feature vector, and resolved into one shared behavioral profile that fans out identically to several consuming services."
     >
       <defs>
         <radialGradient id="bhv-glow" cx="0.5" cy="0.5" r="0.5">

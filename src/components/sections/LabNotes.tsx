@@ -69,7 +69,7 @@ export default function LabNotes({
                 aria-pressed={isActive}
                 onClick={() => setActive(category)}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 font-mono text-[length:var(--text-mono-xs)] tracking-[0.1em] uppercase transition-all duration-300 ease-[var(--ease-out-expo)]",
+                  "inline-flex min-h-11 items-center gap-2 rounded-full border px-3.5 py-1.5 font-mono text-[length:var(--text-mono-xs)] tracking-[0.1em] uppercase transition-all duration-300 ease-[var(--ease-out-expo)]",
                   isActive
                     ? "border-signal/45 bg-signal/10 text-signal-bright shadow-[0_0_22px_-10px_var(--color-signal)]"
                     : "border-line-2 bg-surface-2/50 text-ink-2 hover:border-line-bright hover:bg-surface-3/60 hover:text-ink",

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Wide but short desktop screens (1024x768, 1280x720, 1366x768): pinned
+   chapters tighten so they fit beneath the fixed header. */
+@custom-variant short (@media (min-width: 64rem) and (max-height: 52rem));
+
 /* ============================================================
    DESIGN SYSTEM — "Digital Observatory"
    Deep space black · luminous particles · cyan signal · subtle violet
@@ -75,7 +79,11 @@
 
   html {
     color-scheme: dark;
-    scroll-behavior: smooth;
+    /* Deliberately NOT scroll-behavior: smooth. Chrome honours it when
+       restoring scroll on Back/Forward, turning restoration into an animated
+       scroll that is cancelled while Next swaps the page in — the reader lost
+       their place. Same-page anchor jumps are smoothed explicitly instead
+       (RouteScrollReset). */
     -webkit-text-size-adjust: 100%;
     /* Clip at the root: overflow here propagates to the viewport, so the
        window stays the scroll container. Setting this on <body> instead

@@ -17,7 +17,7 @@ export default function WorkPage() {
         index="04"
         label="Projects"
         title="Four systems, built to be relied on."
-        lede="Each shipped into a production workflow where a wrong answer has a cost."
+        lede="Each built for a workflow where a wrong answer has a cost."
       >
         <p className="mono-meta mt-6 flex items-start gap-2 text-ink-3">
           <Lock aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" strokeWidth={1.75} />

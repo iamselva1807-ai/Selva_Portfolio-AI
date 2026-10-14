@@ -20,6 +20,7 @@ import {
   siCursor,
   siClaude,
 } from "simple-icons";
+import { AppWindow, ChartColumn, Cloud, Database, FileSpreadsheet, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 type SimpleIcon = { title: string; path: string };
@@ -29,8 +30,8 @@ type SimpleIcon = { title: string; path: string };
  *
  * Deliberately absent: AWS, Playwright, Power BI and Excel (their trademark
  * holders had them removed from simple-icons), and SQL — the only match is the
- * PostgreSQL elephant, which would misstate the stack. Those render with a
- * neutral glyph and their label, never someone else's logo.
+ * PostgreSQL elephant, which would misstate the stack. Those get a generic
+ * glyph for what the tool is (GENERIC_GLYPHS), never someone else's logo.
  */
 const TECH_LOGOS: Record<string, SimpleIcon> = {
   Python: siPython,
@@ -57,13 +58,26 @@ const TECH_LOGOS: Record<string, SimpleIcon> = {
   "Claude Code": siClaude,
 };
 
+/** Unbranded tools: a plain glyph for the kind of tool, beside its label. */
+const GENERIC_GLYPHS: Record<string, LucideIcon> = {
+  SQL: Database,
+  AWS: Cloud,
+  "Power BI": ChartColumn,
+  Excel: FileSpreadsheet,
+  Playwright: AppWindow,
+};
+
 export function hasTechLogo(name: string): boolean {
-  return name in TECH_LOGOS;
+  return name in TECH_LOGOS || name in GENERIC_GLYPHS;
 }
 
 /** A technology logo, monochrome in the current text colour. */
 export function TechLogo({ name, className }: { name: string; className?: string }) {
   const icon = TECH_LOGOS[name];
+  const Glyph = GENERIC_GLYPHS[name];
+  if (!icon && Glyph) {
+    return <Glyph aria-hidden="true" className={cn("size-4 shrink-0", className)} strokeWidth={1.6} />;
+  }
   if (!icon) {
     // Neutral glyph: a small open ring, so unbranded tools sit in the same rhythm.
     return (

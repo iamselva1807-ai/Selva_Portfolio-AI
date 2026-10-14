@@ -35,8 +35,10 @@ export default function CapabilitiesBand() {
         link={{ href: "/experience#capabilities", label: "Full capabilities" }}
       />
       <RevealGroup as="ul" className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4 lg:grid-cols-7">
+        {/* 14 tools fill 2 and 7 columns exactly; in the 4-column tablet grid the
+            last two tiles widen so the final row has no empty cells. */}
         {TOOLS.map((tool) => (
-          <RevealItem as="li" key={tool}>
+          <RevealItem as="li" key={tool} className="sm:max-lg:last:col-span-2 sm:max-lg:nth-last-2:col-span-2">
             <div className="group flex h-full items-center gap-3 bg-surface/90 px-4 py-5 transition-colors duration-500 hover:bg-surface-2/90 sm:flex-col sm:items-start sm:gap-4 sm:px-5 sm:py-6">
               <TechLogo name={tool} className="size-6 text-ink-3 transition-colors duration-500 group-hover:text-signal" />
               <span className="text-sm font-medium text-ink-2 transition-colors duration-500 group-hover:text-ink">{tool}</span>

@@ -51,14 +51,14 @@ export default function PhilosophyChapter() {
       className="relative lg:h-[240vh]"
     >
       <div className="lg:sticky lg:top-0 lg:flex lg:h-[100svh] lg:items-center">
-        <div className="shell grid w-full items-center gap-12 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-0">
+        <div className="shell grid w-full items-center gap-12 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pt-[4.5rem] lg:pb-4">
           <div>
             <SectionLabel index="01">How I work</SectionLabel>
             <h2 id="philosophy-title" className="mt-5 max-w-xl text-[length:var(--text-display-sm)] font-semibold text-balance text-ink">
               I start from the decision, not the model.
             </h2>
 
-            <ol className="mt-10 space-y-2">
+            <ol className="mt-10 space-y-2 short:mt-6">
               {BEATS.map((beat, i) => {
                 const on = i === active;
                 return (
@@ -66,10 +66,10 @@ export default function PhilosophyChapter() {
                     key={beat.title}
                     data-active={on}
                     className={cn(
-                      "relative rounded-2xl border p-5 transition-[border-color,background-color,opacity] duration-500 sm:p-6",
+                      "group/beat relative rounded-2xl border p-5 transition-[border-color,background-color] duration-500 sm:p-6 short:p-4",
                       "border-line bg-surface/60",
-                      "lg:border-transparent lg:bg-transparent lg:opacity-40",
-                      "lg:data-[active=true]:border-line lg:data-[active=true]:bg-surface/70 lg:data-[active=true]:opacity-100",
+                      "lg:border-transparent lg:bg-transparent",
+                      "lg:data-[active=true]:border-line lg:data-[active=true]:bg-surface/70",
                     )}
                   >
                     {/* progress tick that grows on the active principle */}
@@ -81,10 +81,10 @@ export default function PhilosophyChapter() {
                       )}
                     />
                     <p className="flex items-baseline gap-3">
-                      <span className="mono-label tabular-nums text-signal/80">0{i + 1}</span>
-                      <span className="text-[length:var(--text-fluid-lg)] font-semibold tracking-[-0.02em] text-ink">{beat.title}</span>
+                      <span className={cn("mono-label tabular-nums transition-colors duration-500", on ? "text-signal/80" : "text-ink-3 max-lg:text-signal/80")}>0{i + 1}</span>
+                      <span className={cn("text-[length:var(--text-fluid-lg)] font-semibold tracking-[-0.02em] transition-colors duration-500", on ? "text-ink" : "text-ink-2 max-lg:text-ink")}>{beat.title}</span>
                     </p>
-                    <p className="mt-2 pl-8 text-[0.9375rem] leading-relaxed text-ink-2">{beat.line}</p>
+                    <p className={cn("mt-2 pl-8 text-[0.9375rem] leading-relaxed transition-colors duration-500", on ? "text-ink-2" : "text-ink-3 max-lg:text-ink-2")}>{beat.line}</p>
                   </li>
                 );
               })}
@@ -92,7 +92,7 @@ export default function PhilosophyChapter() {
 
             <Link
               href="/about"
-              className="group mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-signal transition-colors hover:text-signal-bright"
+              className="group mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-signal transition-colors hover:text-signal-bright short:mt-5"
             >
               More about how I work
               <ArrowGlyph />

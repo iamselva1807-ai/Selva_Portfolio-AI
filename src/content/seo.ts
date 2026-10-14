@@ -38,7 +38,7 @@ export const seo: Seo = {
     {
       "route": "/research",
       "title": "Research & Engineering",
-      "description": "Lab notes on face embeddings, threshold calibration, anti-spoofing datasets, ONNX deployment, LLM-driven extraction and retrieval — questions, not claims."
+      "description": "Engineering notes on evaluating pretrained models, ONNX deployment, schema-driven LLM extraction and retrieval — questions, not claims."
     },
     {
       "route": "/experience",

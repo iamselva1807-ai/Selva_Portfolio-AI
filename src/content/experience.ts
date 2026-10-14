@@ -37,7 +37,7 @@ export const roles: Role[] = [
     "summary": "The data the business needed lived on other people's websites, written for human eyes and nothing else. I built crawling pipelines that read those pages with LLM assistance and handed back clean, schema-consistent records.",
     "highlights": [
       "Built LLM-assisted crawling pipelines in Playwright and Selenium, using prompt-driven parsing against a fixed schema instead of brittle, position-dependent selectors.",
-      "Automated recurring collection through scheduled headless sessions, which also kept the pipelines standing when source layouts changed.",
+      "Automated recurring collection through scheduled headless sessions, which also reduced maintenance when source layouts changed.",
       "Built EDA-driven dashboards so stakeholders could act on findings without waiting on an ad hoc query."
     ],
     "capabilities": [

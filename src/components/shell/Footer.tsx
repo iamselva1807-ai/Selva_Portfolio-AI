@@ -15,10 +15,10 @@ export default function Footer() {
 
         <nav aria-label="Footer">
           <p className="mono-label mb-3">Navigate</p>
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5">
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-1">
             {navItems.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-sm text-ink-2 transition-colors hover:text-signal">
+                <Link href={item.href} className="inline-flex min-h-9 items-center text-sm text-ink-2 transition-colors hover:text-signal">
                   {item.label}
                 </Link>
               </li>
@@ -28,13 +28,13 @@ export default function Footer() {
 
         <div>
           <p className="mono-label mb-3">Elsewhere</p>
-          <ul className="space-y-1.5">
+          <ul className="space-y-1">
             {contactChannels.map((c) => (
               <li key={c.id}>
                 <a
                   href={c.href}
                   {...(c.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
-                  className="inline-flex items-center gap-1 text-sm break-all text-ink-2 transition-colors hover:text-signal"
+                  className="inline-flex min-h-9 items-center gap-1 text-sm break-all text-ink-2 transition-colors hover:text-signal"
                 >
                   {c.id === "email" ? c.value : c.label}
                   {c.external && <ArrowUpRight aria-hidden="true" className="size-3.5" />}

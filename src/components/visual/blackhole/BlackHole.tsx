@@ -164,7 +164,7 @@ export default function BlackHole({
     const loop = (now: number) => {
       if (!running) return;
       raf = requestAnimationFrame(loop);
-      if (now - last < FRAME_MS) return;
+      if (now - last < FRAME_MS - 2) return; // tolerance: every 2nd vsync at 60 Hz
       const spent = now - last;
       last = now;
 
@@ -194,11 +194,19 @@ export default function BlackHole({
       cancelAnimationFrame(raf);
     };
 
-    const io = new IntersectionObserver(([entry]) => (entry.isIntersecting ? play() : pause()), {
-      rootMargin: "100px",
-    });
+    // Two signals gate one loop: render only when on screen AND the tab is
+    // visible. Returning to the tab must not restart a canvas scrolled away.
+    let onScreen = false;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+        if (onScreen && !document.hidden) play();
+        else pause();
+      },
+      { rootMargin: "100px" },
+    );
     io.observe(canvas);
-    const onVis = () => (document.hidden ? pause() : play());
+    const onVis = () => (document.hidden || !onScreen ? pause() : play());
     document.addEventListener("visibilitychange", onVis);
 
     const ro = new ResizeObserver(() => {

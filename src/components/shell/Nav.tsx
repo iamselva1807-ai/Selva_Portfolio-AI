@@ -93,6 +93,10 @@ export default function Nav() {
     document.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    // The page behind the drawer is out of reach for keyboard and screen
+    // readers too, not just visually covered. The header (with the trigger) stays live.
+    const behind = Array.from(document.querySelectorAll<HTMLElement>("main, footer"));
+    behind.forEach((el) => el.setAttribute("inert", ""));
 
     // Widening past the desktop breakpoint hides the drawer; release the lock
     // so the page can't be left frozen with no visible way out.
@@ -104,6 +108,7 @@ export default function Nav() {
       document.removeEventListener("keydown", onKey);
       mq.removeEventListener("change", onMq);
       document.body.style.overflow = prev;
+      behind.forEach((el) => el.removeAttribute("inert"));
       if (panel?.contains(document.activeElement)) trigger?.focus();
     };
   }, [open]);
@@ -135,7 +140,12 @@ export default function Nav() {
           )}
         />
         <nav aria-label="Primary" className="relative shell-wide flex items-center justify-between gap-3">
-          <Link href="/" className="group flex min-w-0 items-center gap-2.5 rounded-full py-1 pr-2" aria-label={`${site.name} — home`}>
+          <Link
+            href="/"
+            onClick={() => setOpen(false)}
+            className="group flex min-w-0 items-center gap-2.5 rounded-full py-1 pr-2"
+            aria-label={`${site.name} — home`}
+          >
             <OrbitMark />
             <span className="truncate text-[1.0625rem] font-semibold tracking-[-0.025em] text-ink sm:text-[1.1875rem]">
               Selvakumar
@@ -227,6 +237,7 @@ export default function Nav() {
                       <li key={item.href}>
                         <Link
                           href={item.href}
+                          onClick={() => setOpen(false)}
                           aria-current={active ? "page" : undefined}
                           className={cn(
                             "flex items-baseline gap-4 border-b border-line/70 py-3.5 text-[1.375rem] font-medium tracking-[-0.03em] transition-colors",
@@ -245,6 +256,7 @@ export default function Nav() {
                     <li key={c.id}>
                       <a
                         href={c.href}
+                        onClick={() => setOpen(false)}
                         {...(c.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
                         className="mono-meta inline-flex items-center gap-1.5 text-ink-2 transition-colors hover:text-signal"
                       >

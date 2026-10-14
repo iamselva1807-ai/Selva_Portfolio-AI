@@ -94,7 +94,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      data-scroll-behavior="smooth"
       className={`${inter.variable} ${jetbrains.variable} antialiased`}
     >
       <body className="relative flex min-h-screen flex-col">

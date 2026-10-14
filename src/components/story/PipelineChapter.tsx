@@ -40,7 +40,7 @@ export default function PipelineChapter() {
   return (
     <section ref={ref} id="architecture" data-chapter="How it's built" aria-labelledby="architecture-title" className="relative lg:h-[230vh]">
       <div className="lg:sticky lg:top-0 lg:flex lg:h-[100svh] lg:items-center">
-        <div className="shell w-full py-24 lg:py-0">
+        <div className="shell w-full py-24 lg:pt-[4.5rem] lg:pb-4">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <SectionLabel index="04">How it&rsquo;s built</SectionLabel>

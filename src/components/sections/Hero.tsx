@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowDown, Mail } from "lucide-react";
 import { CTA, ArrowGlyph } from "@/components/ui/Button";
@@ -43,7 +43,21 @@ function RevealHeadline({ text }: { text: string }) {
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  // Progress through the hero = page scroll ÷ hero height. Deliberately not
+  // useScroll({ target }): Motion maps that to a native ViewTimeline whose
+  // default inset includes the root scroll-padding-top, which put progress at
+  // ~0.1 before any scrolling — the copy rendered at 86% and the scroll cue at
+  // 35%, varying from one load to the next.
+  const { scrollY } = useScroll();
+  const [heroHeight, setHeroHeight] = useState(1);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setHeroHeight(el.offsetHeight || 1));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const scrollYProgress = useTransform(scrollY, (y) => Math.min(1, Math.max(0, y / heroHeight)));
 
   // As the hero scrolls away the black hole drifts up, grows and dims, while
   // the copy lifts and fades a little faster — depth without hijacking scroll.
@@ -74,11 +88,11 @@ export default function Hero() {
 
       {/* Readability scrims: text always sits on near-black. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,var(--color-void)_0%,color-mix(in_oklab,var(--color-void)_78%,transparent)_34%,transparent_62%)] max-lg:hidden" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,transparent_0%,color-mix(in_oklab,var(--color-void)_55%,transparent)_34%,var(--color-void)_62%)] lg:hidden" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,transparent_0%,color-mix(in_oklab,var(--color-void)_72%,transparent)_20%,var(--color-void)_32%)] lg:hidden" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-b from-transparent to-void" />
 
       <motion.div style={{ y: copyY, opacity: copyOpacity }} className="shell relative w-full">
-        <div className="max-w-2xl pt-[34vw] sm:pt-[26vw] lg:pt-0">
+        <div className="max-w-2xl pt-[40vw] sm:pt-[28vw] lg:pt-0">
           <motion.p
             data-reveal=""
             initial={{ opacity: 0, y: 10 }}
