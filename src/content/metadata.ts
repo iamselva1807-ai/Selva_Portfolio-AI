@@ -36,7 +36,10 @@ export function buildPageMetadata({
     route === "/" ? seo.ogTitle : `${resolvedTitle} — ${site.name}`;
 
   return {
-    title: resolvedTitle,
+    // title.template only applies to *child* segments, so the home page — which
+    // lives in the root segment — must state its full title outright or it
+    // loses the name entirely.
+    title: route === "/" ? { absolute: seo.siteTitle } : resolvedTitle,
     description: resolvedDescription,
     alternates: { canonical: route },
     openGraph: {
